@@ -1,14 +1,11 @@
 ---
 title: "Multivariate Chi-Square Anomaly Classification (MCAC)"
 author: "1Lt Alexander Trigo"
-date: "17 January 2018"
-output: github_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  github_document
 keep_md: yes
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## Product Information
 
