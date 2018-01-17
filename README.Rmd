@@ -1,7 +1,7 @@
 ---
 title: "Multivariate Chi-Square Anomaly Classification (MCAC)"
 author: "1Lt Alexander Trigo"
-date: "`r format(Sys.Date(), '%d %B %Y')`"
+date: "17 January 2018"
 output: github_document
 keep_md: yes
 ---
@@ -22,11 +22,11 @@ MCAC will provide A user interface for quick and automated analysis of cyber int
   
   The `anomlyDetection` package features several important tools we will use to conduct MCAC analysis.  First, the package includes functionality which allows us to transform the user uploaded data frame into a tabulated state vector format which is conducive to multivariate analysis.  Second, this package allows us to calculate the Mahalabnobis distance (1) of the observations, which is crucial for the Chi-Square Q-Q plot analysis.
   
-  $$ MD = \sqrt{(x - \bar{x})^T C^{-1} (x - \bar{x}) }  \tag{1}  $$
+  $$MD = \sqrt{(x - \bar{x})^T C^{-1} (x - \bar{x}) }  \tag{1}$$
 
   The classification of outliers based on the chi squared plot is contingent upon the fact that an underlying distribution of Mahalanobis distances for a multivariate normal population is chi-square with degrees of freedom equivalent to the the number of data set features(Gnanadesikan, 1977).  Due to this relationship, Mahalanobis distances can be sorted in ascending order and plotted against a corresponding set of chi-square values.  For a perfectly normal multivariate population, we would observe a straight line begin at the origin (0,0) and plot at 45 degrees to some arbitrary distant point such as (50,50).  Often times, when our line does not behave well, it is due to the influence of outliers within the data set.  If data points are anomalous, they will be removed iteratively, and co-variance of the data set will be recalculated in order to determine new Mahalanobis distances.
 
-Finally, in order to determine the optimal number of observations for outlier classification, we will use the Standard Error of the Estimate as a basis of measurement. This estimate, often used in regression analysis is give by the equation $\sigma_e = \sqrt\frac{\Sigma(Y - Y')^2}{N}$ where Y is the actual observation Y for a given X, Y' is the predicted Y value, and N is the number of observations.  Ideally, as we remove anomalous observations, the data set will approach multivariate normality, and this error will be reduced iteratively.  We will use a minimization of this value as a criteria for function termination resulting in classifications. 
+Finally, in order to determine the optimal number of observations for outlier classification, we will use the Standard Error of the Estimate as a basis of measurement. This estimate, often used in regression analysis is give by the equation $ \sigma_e = \sqrt\frac{\Sigma(Y - Y')^2}{N} $ where Y is the actual observation Y for a given X, Y' is the predicted Y value, and N is the number of observations.  Ideally, as we remove anomalous observations, the data set will approach multivariate normality, and this error will be reduced iteratively.  We will use a minimization of this value as a criteria for function termination resulting in classifications. 
 
 
 ## Delivery and Schedule
