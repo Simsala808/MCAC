@@ -1,7 +1,7 @@
 Multivariate Chi-Square Anomaly Classification (MCAC)
 ================
 1Lt Alexander Trigo
-17 January 2018
+17 January, 2018
 
 Product Information
 -------------------
