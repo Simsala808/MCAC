@@ -6,8 +6,6 @@ output: github_document
 keep_md: yes
 ---
 
-<!--don't edit README.md go to README.Rmd instead-->
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
