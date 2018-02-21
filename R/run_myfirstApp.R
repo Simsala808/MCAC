@@ -2,6 +2,8 @@
 #'
 #' @description
 #' Runs as shiny app
+#' 
+#' @importFrom shiny shinyAppDir
 #'
 #' @param dir Character string for directory in this package
 #' @param ... Additional options passed to shinyappDir

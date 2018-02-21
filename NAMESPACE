@@ -2,4 +2,5 @@
 
 export(run_myfirstApp)
 importFrom(Rcpp,evalCpp)
+importFrom(shiny,shinyAppDir)
 useDynLib(MCAC)
