@@ -6,6 +6,7 @@ output:
   github_document
 keep_md: yes
 ---
+[![Build Status](https://travis-ci.org/citation891/MCAC.svg?branch=master)](https://travis-ci.org/citation891/MCAC)
 
 ## Product Information
 
