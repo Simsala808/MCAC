@@ -31,7 +31,7 @@
 removeAnomaly <- function(chiSqrPlot, blocks, stateVector, outliers, error, timeData) {
   
   
-  # The block containing the current highest MD.  Rank sorting implies final row
+  # The block containing the current highest MD.  
   removeBlock <- chiSqrPlot[nrow(chiSqrPlot), "block"]
   
   # Generate specific index for that block
@@ -49,9 +49,6 @@ removeAnomaly <- function(chiSqrPlot, blocks, stateVector, outliers, error, time
   
   
   # the chiSqrPlot dataframe must be recreated fro initial MD calculations
-  
-  
-  
   chiSqrData <- cbind(anomalyDetection::mahalanobis_distance(stateVector, output = "md", normalize = TRUE)) %>%
     as.data.frame() %>%
     mutate(block = blocks[,1]) %>% 
