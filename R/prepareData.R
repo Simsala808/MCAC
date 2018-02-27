@@ -88,9 +88,9 @@ for (i in 1:N) {
 chiSqrPlot <<- data.frame(chiSqr, chiSqrData) %>%
   rename(., MD = V1)
 
-blocks <<- CurrentBlocks <- data.frame("block" = 1:nrow(stateVector))
+blocks <<- data.frame("block" = 1:nrow(stateVector))
 
-outliers <- data.frame()
+outliers <<- data.frame()
 
 error <<- data.frame(Error = sqrt((sum((chiSqrPlot$chiSqrVal -
                                          chiSqrPlot$MD)^2))/nrow(chiSqrPlot)))
