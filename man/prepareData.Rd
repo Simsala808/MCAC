@@ -4,7 +4,7 @@
 \alias{prepareData}
 \title{Runs a shiny app in my package}
 \usage{
-prepareData(RawData, Blocksize = 100)
+prepareData(rawData, blocksize = 100)
 }
 \arguments{
 \item{RawData}{Raw data observations as depicted in the SampleData data structure}

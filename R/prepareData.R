@@ -18,7 +18,7 @@
 #' @export
 
 
-prepareData <- function(RawData, Blocksize = 100) {
+prepareData <- function(rawData, blocksize = 100) {
 
   
  
@@ -33,27 +33,27 @@ times <- 'TIME_START'
 
 
 # sort the data based on the column of start times
-ReducedData <- RawData[, c(variables, times)] %>% 
+reducedData <- rawData[, c(variables, times)] %>% 
   as.data.frame() %>%
   .[order(.[, length(variables) +1 ]),]
 
 # generate state vector using anomalyDetection package
-stateVector <<- anomalyDetection::tabulate_state_vector(ReducedData, Blocksize, level_limit = 50, level_keep = 10) %>% 
+stateVector <- anomalyDetection::tabulate_state_vector(reducedData, blocksize, level_limit = 50, level_keep = 10) %>% 
   mc_adjust(., min_var = 0.1, max_cor = 0.9, action = "exclude") 
 
 # Here we are creating time ranges corresponding to block sizes on the raw data time variable 
 
-NB <- ceiling(nrow(RawData)/Blocksize) 
+nb <- ceiling(nrow(rawData)/blocksize) 
 
-TimeData <- as.data.frame(ReducedData[, times])
+timeData <- as.data.frame(reducedData[, times])
 
-TimeData <- TimeData %>%
-  mutate(Block = rep(1:NB, each = Blocksize, length.out = nrow(TimeData))) %>%
-  group_by(Block) %>% 
-  summarise(Min = min(`ReducedData[, times]`),
-            Max = max(`ReducedData[, times]`)) %>% 
-  mutate(TimeRange = paste(Min, Max, sep = 'to')) %>% 
-  dplyr::select(TimeRange) %>%
+timeData <- timeData %>%
+  mutate(block = rep(1:nb, each = blocksize, length.out = nrow(timeData))) %>%
+  group_by(block) %>% 
+  summarise(Min = min(`reducedData[, times]`),
+            Max = max(`reducedData[, times]`)) %>% 
+  mutate(timeRange = paste(Min, Max, sep = ' to ')) %>% 
+  dplyr::select(timeRange) %>%
   as.vector() %>%
   data.frame(., block = 1:nrow(.))
 
@@ -62,38 +62,45 @@ TimeData <- TimeData %>%
 chiSqrData <- cbind(anomalyDetection::mahalanobis_distance(stateVector, output = "md", normalize = TRUE)) %>%
   as.data.frame() %>%
   mutate(block = 1:nrow(.)) %>% 
-  left_join(., TimeData, by = "block") %>% 
+  left_join(., timeData, by = "block") %>% 
   arrange(.,V1)
 
 # ith ranked MD out of N is important
-N <- nrow(chiSqrData)
+n <- nrow(chiSqrData)
 df <- ncol(stateVector)
 
 #Cumulative Probability based on p = (i - .5)/N  
-p <- data.frame(CumProb= 1:N)
+p <- data.frame(cumProb= 1:n)
 
-for (i in 1:N) {
-  p[i, 1] = (i-.5)/N
+for (i in 1:n) {
+  p[i, 1] = (i-.5)/n
 }
 
 # MD to be plotted against chi-sq values X^2 (p,r), where p is the cum prob and 
 # r is the number of variables (degrees of freedom)
 
-chiSqr <- data.frame(chiSqrVal = 1:N)
+chiSqr <- data.frame(chiSqrVal = 1:n)
 
-for (i in 1:N) {
+for (i in 1:n) {
   chiSqr[i, 1] = qchisq(p[i,1], df )
 }
 
-chiSqrPlot <<- data.frame(chiSqr, chiSqrData) %>%
-  rename(., MD = V1)
+chiSqrPlot <- data.frame(chiSqr, chiSqrData) %>%
+  rename(., mahalanobisDistance = V1)
 
-blocks <<- data.frame("block" = 1:nrow(stateVector))
+blocks <- data.frame("block" = 1:nrow(stateVector))
 
-outliers <<- data.frame()
+outliers <- data.frame()
 
-error <<- data.frame(Error = sqrt((sum((chiSqrPlot$chiSqrVal -
-                                         chiSqrPlot$MD)^2))/nrow(chiSqrPlot)))
+error <- data.frame(Error = sqrt((sum((chiSqrPlot$chiSqrVal -
+                                         chiSqrPlot$mahalanobisDistance)^2))/nrow(chiSqrPlot)))
+
+chiSqrPlot <<- chiSqrPlot
+blocks <<- blocks
+stateVector <<- stateVector
+outliers <<- outliers
+error <<- error
+timeData <<- timeData
 
 
 }
