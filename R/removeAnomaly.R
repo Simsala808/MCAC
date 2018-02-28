@@ -6,14 +6,9 @@
 #' global environment from the  prepareData function as arguments and overwrites them with reduced data.  This
 #' allows for iteration.  The chiSqrPlot dataframe is used as the argument for the chiSqrQQ fucntion to genrate
 #' a Chi-Square QQ plot.
-#' 
 #'
-#' 
-#' @import anomalyDetection
 #' @import tidyverse
-#' @import dplyr
-#' 
-#' 
+#' @import anomalyDetection
 #'
 #' @param chiSqrPlot Contains observational Chi-square value, MD, time range, and associated block.
 #' @param blocks Stores a current index vector of all non-classified blocks.

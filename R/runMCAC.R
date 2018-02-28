@@ -1,4 +1,4 @@
-#' @title Runs a shiny app in my package
+#' @title Run MCAC Shiny App
 #'
 #' @description
 #' Runs as shiny app
@@ -11,10 +11,10 @@
 #' @return A printed shiny app
 #' @export
 
-run_myfirstApp <- function(dir, ...){
+runMCAC <- function(dir, ...){
   
   #app_dir <- dirname('C:/Users/amtri/Desktop/AFIT/Final Class/MCAC/inst/apps/myfirstApp/ui.R/')
-  app_dir <-system.file('apps', 'myfirstApp', package = 'MCAC')
+  app_dir <-system.file('apps', 'MCACapp', package = 'MCAC')
   
   shiny::shinyAppDir(app_dir, options = list(...))
   
