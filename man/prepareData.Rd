@@ -7,9 +7,9 @@
 prepareData(rawData, blocksize = 100)
 }
 \arguments{
-\item{RawData}{Raw data observations as depicted in the SampleData data structure}
+\item{rawData}{Raw data observations as depicted in the SampleData data structure}
 
-\item{Blocksize}{This input determines number of raw data observations per tabulated block}
+\item{blocksize}{This input determines number of raw data observations per tabulated block}
 }
 \value{
 This transforms raw data input into the tabulated state vector and returns input arguments needed for remove function

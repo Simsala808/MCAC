@@ -10,8 +10,8 @@
 #' 
 #' 
 #'
-#' @param RawData Raw data observations as depicted in the SampleData data structure
-#' @param Blocksize This input determines number of raw data observations per tabulated block 
+#' @param rawData Raw data observations as depicted in the SampleData data structure
+#' @param blocksize This input determines number of raw data observations per tabulated block 
 #'
 #' @return This transforms raw data input into the tabulated state vector and returns input arguments needed for remove function 
 #'
