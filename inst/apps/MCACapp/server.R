@@ -28,11 +28,28 @@ shinyServer(function(input, output){
   
   #reactive output that contains dataset and displays it in table format
 
-  
   output$table <- renderTable({
     if(is.null(data())){return()}
     head(data())
   })
+  
+ 
+  ################################
+  # PREPARE DATA REACTIVE BUTTON #
+  ################################
+  
+  prepareData <- eventReactive(input$prepare, {
+    rawData <- input$file
+    if(is.null(rawData)){return()}
+    read.table(file = rawData$datapath, sep = ",", header = input$header)
+  })
+      
+  output$stateVector <- renderTable({
+    if(is.null(prepareData())){return()}
+    head(prepareData())
+  })
+  
+
   
   output$tb <- renderUI({
     if(is.null(data()))
@@ -40,6 +57,15 @@ shinyServer(function(input, output){
     else
       tabsetPanel(tabPanel("About Data", tableOutput("filedf")), tabPanel("Data", tableOutput("table")))
   })
+  
+  
+  output$prepareData <- renderUI({
+    if(is.null(data()))
+      h5("Awaiting Command")
+    else
+      tabsetPanel(tabPanel("State Vector", tableOutput("stateVector")))
+  })
+  
   
   }
 )

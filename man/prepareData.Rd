@@ -2,19 +2,21 @@
 % Please edit documentation in R/prepareData.R
 \name{prepareData}
 \alias{prepareData}
-\title{Runs a shiny app in my package}
+\title{Preparation of Raw Data}
 \usage{
 prepareData(rawData, blocksize = 100)
 }
 \arguments{
-\item{rawData}{Raw data observations as depicted in the SampleData data structure}
+\item{rawData}{Raw data observations as depicted in the sampleData data structure}
 
 \item{blocksize}{This input determines number of raw data observations per tabulated block}
 }
 \value{
-This transforms raw data input into the tabulated state vector and returns input arguments needed for remove function
+From raw date, return objects to the global environment that can be used in
+'removeAnomaly' and 'plotQQ' fucntions.
 }
 \description{
 Takes raw data frame as an input and generates tabulated state vector and initial
-data structures necessary for chi-square plot generation
+data structures necessary for chi-square plot generation.  Functionality testign can
+be conducted with the 'sampleData' Rda file included with this package.
 }

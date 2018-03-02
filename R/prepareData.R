@@ -1,20 +1,23 @@
-#' @title Runs a shiny app in my package
+#' @title Preparation of Raw Data
 #'
-#' @description
-#' Takes raw data frame as an input and generates tabulated state vector and initial
-#' data structures necessary for chi-square plot generation
+#' @description Takes raw data frame as an input and generates tabulated state vector and initial
+#' data structures necessary for chi-square plot generation.  Functionality testign can
+#' be conducted with the 'sampleData' Rda file included with this package.
+#' 
 #' 
 #' @import anomalyDetection
 #' @import tidyverse
-#' @import dplyr
 #' 
 #' 
 #'
-#' @param rawData Raw data observations as depicted in the SampleData data structure
+#' @param rawData Raw data observations as depicted in the sampleData data structure
 #' @param blocksize This input determines number of raw data observations per tabulated block 
+#' 
 #'
-#' @return This transforms raw data input into the tabulated state vector and returns input arguments needed for remove function 
-#'
+#' @return From raw date, return objects to the global environment that can be used in
+#' 'removeAnomaly' and 'plotQQ' fucntions.
+#'  
+#' 
 #' @export
 
 
