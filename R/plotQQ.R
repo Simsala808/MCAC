@@ -4,7 +4,7 @@
 #' Chi-Square distribution value.  The red line plotted is the model for perfect multivariate normality.  The chiSqrPlot
 #' object can be generated via either the `prepareData` or `removeAnomaly` fucntion.
 #' 
-#' @import tidyverse
+#' @import ggplot2
 #'
 #' @param chiSqrPlot Contains observational Chi-square value, MD, time range, and associated block.
 #' 

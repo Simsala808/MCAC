@@ -4,9 +4,10 @@
 #' data structures necessary for chi-square plot generation.  Functionality testign can
 #' be conducted with the 'sampleData' Rda file included with this package.
 #' 
-#' 
+#' @importFrom stats qchisq
 #' @import anomalyDetection
-#' @import tidyverse
+#' @import ggplot2
+#' @import dplyr
 #' 
 #' 
 #'
@@ -41,7 +42,7 @@ reducedData <- rawData[, c(variables, times)] %>%
   .[order(.[, length(variables) +1 ]),]
 
 # generate state vector using anomalyDetection package
-stateVector <- anomalyDetection::tabulate_state_vector(reducedData, blocksize, level_limit = 50, level_keep = 10) %>% 
+stateVector <- tabulate_state_vector(reducedData, blocksize, level_limit = 50, level_keep = 10) %>% 
   mc_adjust(., min_var = 0.1, max_cor = 0.9, action = "exclude") 
 
 # Here we are creating time ranges corresponding to block sizes on the raw data time variable 
@@ -56,13 +57,13 @@ timeData <- timeData %>%
   summarise(Min = min(`reducedData[, times]`),
             Max = max(`reducedData[, times]`)) %>% 
   mutate(timeRange = paste(Min, Max, sep = ' to ')) %>% 
-  dplyr::select(timeRange) %>%
+  select(timeRange) %>%
   as.vector() %>%
   data.frame(., block = 1:nrow(.))
 
 
 # Construction of a matrix of data for use in the Chi-Square plot generation
-chiSqrData <- cbind(anomalyDetection::mahalanobis_distance(stateVector, output = "md", normalize = TRUE)) %>%
+chiSqrData <- cbind(mahalanobis_distance(stateVector, output = "md", normalize = TRUE)) %>%
   as.data.frame() %>%
   mutate(block = 1:nrow(.)) %>% 
   left_join(., timeData, by = "block") %>% 

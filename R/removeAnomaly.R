@@ -7,8 +7,10 @@
 #' allows for iteration.  The chiSqrPlot dataframe is used as the argument for the chiSqrQQ fucntion to genrate
 #' a Chi-Square QQ plot.
 #'
-#' @import tidyverse
+#' @importFrom stats qchisq
 #' @import anomalyDetection
+#' @import ggplot2
+#' @import dplyr
 #'
 #' @param chiSqrPlot Contains observational Chi-square value, MD, time range, and associated block.
 #' @param blocks Stores a current index vector of all non-classified blocks.
@@ -44,7 +46,7 @@ removeAnomaly <- function(chiSqrPlot, blocks, stateVector, outliers, error, time
   
   
   # the chiSqrPlot dataframe must be recreated fro initial MD calculations
-  chiSqrData <- cbind(anomalyDetection::mahalanobis_distance(stateVector, output = "md", normalize = TRUE)) %>%
+  chiSqrData <- cbind(mahalanobis_distance(stateVector, output = "md", normalize = TRUE)) %>%
     as.data.frame() %>%
     mutate(block = blocks[,1]) %>% 
     left_join(., timeData, by = "block") %>% 
