@@ -99,13 +99,23 @@ outliers <- data.frame()
 error <- data.frame(Error = sqrt((sum((chiSqrPlot$chiSqrVal -
                                          chiSqrPlot$mahalanobisDistance)^2))/nrow(chiSqrPlot)))
 
+zout <- list()
+
+zout$chiSqrPlot <- chiSqrPlot
+zout$blocks <- blocks
+zout$stateVector <- stateVector
+zout$outliers <- outliers
+zout$error <- error
+zout$timeData <- timeData
+
+return(zout)
+
 chiSqrPlot <<- chiSqrPlot
 blocks <<- blocks
 stateVector <<- stateVector
 outliers <<- outliers
 error <<- error
 timeData <<- timeData
-
 
 }
 

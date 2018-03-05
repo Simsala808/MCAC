@@ -1,6 +1,7 @@
 library(shiny)
 library(MCAC)
 
+
 # define ui for app
 ui <- fluidPage(
   
@@ -25,16 +26,16 @@ ui <- fluidPage(
       br(),
       
       # Clarifying text for purpose of the prepare data button
-      h5(helpText("1. After raw data file is selected, click 'Update Data' to generate the following: Tabulated statev ector, initial chi-Square Q-Q plot, initial error.")),
-      actionButton("prepare", "Prepare Data")
+      h5(helpText("1. After raw data file is selected and threshold set, click 'Classify Outliers' to generate a reduced Q-Q plot.")),
+      actionButton("iterate", "Classify Outliers")
     
     ),
     mainPanel(
       uiOutput("tb"),
       
       # Output: Header + State vector Tabset ----
-      h4("Initial Chi-Sqr Q-Q Plot"),
-      uiOutput("prepare")
+      h4("Tabulated State Vector"),
+      uiOutput("initial")
               
     )
     
