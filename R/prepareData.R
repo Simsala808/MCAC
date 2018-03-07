@@ -24,7 +24,7 @@
 
 prepareData <- function(rawData, blocksize = 100) {
 
-  
+  #`%>%` <- dplyr::`%>%`
  
 # variables and times are currently hard coded into the function,
 # ideally a user could select which variables to use from the rawdataset
@@ -50,6 +50,11 @@ stateVector <- tabulate_state_vector(reducedData, blocksize, level_limit = 50, l
 nb <- ceiling(nrow(rawData)/blocksize) 
 
 timeData <- as.data.frame(reducedData[, times])
+
+
+# timeData$`reducedData[, times]` <- gsub('T', ' ', timeData$`reducedData[, times]`)
+# timeData$`reducedData[, times]` <- gsub('Z', '', timeData$`reducedData[, times]`)
+# timeData$`reducedData[, times]` <-as.POSIXct(timeData$`reducedData[, times]`)
 
 timeData <- timeData %>%
   mutate(block = rep(1:nb, each = blocksize, length.out = nrow(timeData))) %>%
@@ -99,6 +104,13 @@ outliers <- data.frame()
 error <- data.frame(Error = sqrt((sum((chiSqrPlot$chiSqrVal -
                                          chiSqrPlot$mahalanobisDistance)^2))/nrow(chiSqrPlot)))
 
+chiSqrPlot <<- chiSqrPlot
+blocks <<- blocks
+stateVector <<- stateVector
+outliers <<- outliers
+error <<- error
+timeData <<- timeData
+
 zout <- list()
 
 zout$chiSqrPlot <- chiSqrPlot
@@ -110,12 +122,7 @@ zout$timeData <- timeData
 
 return(zout)
 
-chiSqrPlot <<- chiSqrPlot
-blocks <<- blocks
-stateVector <<- stateVector
-outliers <<- outliers
-error <<- error
-timeData <<- timeData
+
 
 }
 
