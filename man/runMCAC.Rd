@@ -15,5 +15,5 @@ runMCAC(dir, ...)
 A printed shiny app
 }
 \description{
-Runs as shiny app
+Running this function with default values will initiate the MCAC shiny application.
 }

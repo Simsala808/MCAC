@@ -104,6 +104,8 @@ outliers <- data.frame()
 error <- data.frame(Error = sqrt((sum((chiSqrPlot$chiSqrVal -
                                          chiSqrPlot$mahalanobisDistance)^2))/nrow(chiSqrPlot)))
 
+
+initialChiSqrPlot <<- chiSqrPlot
 chiSqrPlot <<- chiSqrPlot
 blocks <<- blocks
 stateVector <<- stateVector
