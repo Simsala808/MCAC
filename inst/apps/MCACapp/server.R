@@ -7,15 +7,14 @@ options(shiny.maxRequestSize = 100*1024^2)
 
 shinyServer(function(input, output){
   
+
   
-  #Reading the Raw data upload and reacting to user parameters
+# Reading the Raw data upload and reacting to user parameters
   
   rawData <- reactive({
     check <- input$file
     if(is.null(check)){return()}
     read_csv(input$file$datapath)
-             
-             # , col_names = input$header)  
   })
   
   
@@ -23,20 +22,14 @@ shinyServer(function(input, output){
     check2 <- input$file
     if(is.null(check2)){return()}
     read_csv(input$file$datapath)
-             
-             
-             # , col_names = input$header) 
-    
   })
   
     
   
   SV <- reactive({
     pd <- prepareData(initialStateVector()) 
-    pd[['stateVector']]
+    pd$stateVector
   })
-  
-
   
   
   #reactive output that contains dataset and displays it in table format
@@ -58,18 +51,6 @@ shinyServer(function(input, output){
   })
     
   
-  
-  
-  #output$stateVectorTable <- renderTable({
-   # if(is.null(initialStateVector())){return()}
-    #head(initialStateVector())
-  #})
-    
-  SV <- reactive({
-    pd <- prepareData(initialStateVector()) 
-    pd[['stateVector']]
-  })
-  
   output$stateVectorTable <- renderTable({
     if(is.null(SV())){return()}
     head(SV())
@@ -79,13 +60,7 @@ shinyServer(function(input, output){
 # Classify Outliers Button #
 ############################ 
   
-  Threshold <- reactive({
-    as.integer(nrow(SV()) * input$threshold)
-  })
-  
-  output$maxiter <- renderText({
-    paste("Current threshold is", as.character(Threshold()))
-  })
+
   
   # QQ2 <- eventReactive(input$iterate, {
   #   maxiter <- as.integer(nrow(SV()) * input$threshold)
@@ -99,26 +74,22 @@ shinyServer(function(input, output){
   
   output$rawData <- renderUI({
     if(is.null(rawData()))
-      h5("Awaiting Data Input")
+      paste("Awaiting Data Input")
     else
-      tabsetPanel(tabPanel("Data Overview", tableOutput("table")))
+      tabsetPanel(tabPanel("RawData File", tableOutput("table")), tabPanel("Initial Chi-Sqrare QQ Plot", plotOutput("initialQQPlot")), tabPanel("Initial State Vector", tableOutput("stateVectorTable")))
   })
   
   
   
-  output$stateVector <- renderUI({
-    if(is.null(initialStateVector()))
-      h5("Awaiting Data Input")
-   else
-      tabsetPanel(tabPanel("Initial Chi-Sqrare QQ Plot", plotOutput("initialQQPlot")), tabPanel("Initial State Vector", tableOutput("stateVectorTable")))
+
+  output$threshold <- renderText({
+    if(is.null(rawData()))
+         paste("Awaiting Data Input")
+         else
+         paste("Current threshold is", as.character((as.integer(nrow(SV()) * input$threshold))))
+
   })
-  
-  output$outlierInfo <- renderUI({
-    if(is.null(initialStateVector()))
-      h5("Awaiting Classification Command")
-    else
-      tabsetPanel(tabPanel("Threshold", verbatimTextOutput("maxiter")))
-  })
+
   
   
 

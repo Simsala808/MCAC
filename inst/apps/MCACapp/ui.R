@@ -36,7 +36,7 @@ ui <- fluidPage(
       tags$hr(),
       
       sliderInput("threshold", "Threshold:",
-                  min = 0, max = 1, value = 0.3, step = 0.025),
+                  min = 0, max = 1, value = 0.03, step = 0.005),
       
       tags$hr(),
       
@@ -49,15 +49,12 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      h4("Raw Data"),
+      h4("Initial Data Overview"),
       uiOutput("rawData"),
+    
       
-      # Output: Header + State vector Tabset ----
-      h4("Initial Overview"),
-      uiOutput("stateVector"),
-      
-      h4("Outlier Classification"),
-      uiOutput("outlierInfo")
+      h4("Maximum Number of Iterations Allowed"),
+      verbatimTextOutput("threshold")
       
       
       
