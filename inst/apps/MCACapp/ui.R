@@ -54,7 +54,7 @@ ui <- fluidPage(
     
       
       h4("Maximum Number of Iterations Allowed"),
-      verbatimTextOutput("threshold")
+      verbatimTextOutput("thresholdUI")
       
       
       

@@ -56,6 +56,14 @@ shinyServer(function(input, output){
     head(SV())
   })
   
+#############
+# Threshold #
+#############   
+
+  maxIter <- reactive({
+    as.integer(nrow(SV()) * input$threshold)
+  })
+  
 ############################  
 # Classify Outliers Button #
 ############################ 
@@ -80,13 +88,12 @@ shinyServer(function(input, output){
   })
   
   
-  
 
-  output$threshold <- renderText({
+  output$thresholdUI <- renderText({
     if(is.null(rawData()))
          paste("Awaiting Data Input")
          else
-         paste("Current threshold is", as.character((as.integer(nrow(SV()) * input$threshold))))
+         paste("Current threshold is", as.character(maxIter()))
 
   })
 
@@ -98,38 +105,4 @@ shinyServer(function(input, output){
 )
 
 
-
-# rv <- reactiveValues()
-# 
-# rv$initialPlot <- prepareData(data)
-
-
-#InitialData <- read.csv(input$file$datapath, 
-#header = input$header,
-#sep = ",")
-
-#initialPlot <- reactive({
-#if(is.null(file1)){return()}
-#prepareData(data())
-#})
-
-# stateVector <- reactive ({ 
-# initialPlot()[3] })
-
-#output$stateVector <- renderTable({
-
-#req(input$file)
-
-#SV <- read.csv(input$file$datapath, 
-#                        header = input$header,
-#                       sep = ",")
-
-#SV <- prepareData(SV)
-
-#SV <- sv$stateVector
-
-#return(SV)
-
-
-#})
 
