@@ -67,13 +67,101 @@ shinyServer(function(input, output){
 ############################  
 # Classify Outliers Button #
 ############################ 
-  
+# chiSqrPlot, blocks, stateVector, outliers, error, timeData
+  Iter <- eventReactive(input$iterate, {
+    
+    if(is.null(maxIter())){return()}
+    
+    N <- maxIter()
+    
+    initialInfo <- prepareData(initialStateVector())
+    chiSqrPlot <- initialInfo$chiSqrPlot
+    blocks <- initialInfo$blocks
+    stateVector <- initialInfo$stateVector
+    outliers <- initialInfo$outliers
+    error <- initialInfo$error
+    timeData <- initialInfo$timeData
 
+    for (i in 1 :N) {
+    Obj <- removeAnomaly(chiSqrPlot, blocks, stateVector, outliers, error, timeData) 
+    chiSqrPlot <- Obj$chiSqrPlot
+    blocks <- Obj$blocks
+    stateVector <- Obj$stateVector
+    outliers <- Obj$outliers
+    error <- Obj$error
+    timeData <- Obj$timeData
+    i = i + 1
+   
+    }
+    
+   (which.min(error$Error) - 1)
+   
+   })
   
-  # QQ2 <- eventReactive(input$iterate, {
-  #   maxiter <- as.integer(nrow(SV()) * input$threshold)
-  #   
-  # })
+  
+  output$reducedQQPlot <- renderPlot({
+    if(is.null(Iter())){return()}
+    
+    N <- Iter()
+    
+    initialInfo <- prepareData(initialStateVector())
+    chiSqrPlot <- initialInfo$chiSqrPlot
+    blocks <- initialInfo$blocks
+    stateVector <- initialInfo$stateVector
+    outliers <- initialInfo$outliers
+    error <- initialInfo$error
+    timeData <- initialInfo$timeData
+    
+    for (i in 1 : N) {
+      Obj <- removeAnomaly(chiSqrPlot, blocks, stateVector, outliers, error, timeData) 
+      chiSqrPlot <- Obj$chiSqrPlot
+      blocks <- Obj$blocks
+      stateVector <- Obj$stateVector
+      outliers <- Obj$outliers
+      error <- Obj$error
+      timeData <- Obj$timeData
+      i = i + 1
+      
+    }
+    
+    reducedPlot <- chiSqrPlot
+    
+    plotQQ(chiSqrPlot)
+    
+  })
+  
+  
+  output$classifiedOutliers <- renderTable({
+    if(is.null(Iter())){return()}
+    
+    N <- Iter()
+    
+    initialInfo <- prepareData(initialStateVector())
+    chiSqrPlot <- initialInfo$chiSqrPlot
+    blocks <- initialInfo$blocks
+    stateVector <- initialInfo$stateVector
+    outliers <- initialInfo$outliers
+    error <- initialInfo$error
+    timeData <- initialInfo$timeData
+    
+    for (i in 1 : N) {
+      Obj <- removeAnomaly(chiSqrPlot, blocks, stateVector, outliers, error, timeData) 
+      chiSqrPlot <- Obj$chiSqrPlot
+      blocks <- Obj$blocks
+      stateVector <- Obj$stateVector
+      outliers <- Obj$outliers
+      error <- Obj$error
+      timeData <- Obj$timeData
+      i = i + 1
+      
+    }
+    
+    outliers <<- outliers
+    
+    outliers
+    
+  })
+  
   
   
 ###############
@@ -93,12 +181,33 @@ shinyServer(function(input, output){
     if(is.null(rawData()))
          paste("Awaiting Data Input")
          else
-         paste("Current threshold is", as.character(maxIter()))
+         paste(as.character(maxIter()))
 
   })
+  
+  output$testUI <- renderText({
+    if(is.null(rawData()))
+      paste("Awaiting Data Input")
+    else
+      paste(as.character(Iter()))
+    
+  })
 
+  output$outlierInfo <- renderUI({
+    if(is.null(Iter()))
+      paste("Awaiting Classification Command")
+    else
+      tabsetPanel(tabPanel("Reduced Chi-Sqrare QQ Plot", plotOutput("reducedQQPlot")), tabPanel("Outliers", tableOutput("classifiedOutliers")) )
+  })
   
-  
+  output$export <- downloadHandler(
+    filename = function() {
+      paste(outliers, ".csv")
+    },
+    content = function(file) {
+      write.csv(outliers, file, row.names = FALSE)
+    }
+  )
 
   
 }

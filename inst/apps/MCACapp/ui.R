@@ -36,14 +36,19 @@ ui <- fluidPage(
       tags$hr(),
       
       sliderInput("threshold", "Threshold:",
-                  min = 0, max = 1, value = 0.03, step = 0.005),
+                  min = 0, max = 1, value = 0.06, step = 0.005),
       
       tags$hr(),
       
       h5(helpText("3: After raw data file is selected and threshold set, click 'Classify Outliers' to generate a reduced Q-Q plot.")),
       
-      actionButton("iterate", "Classify Outliers")
+      actionButton("iterate", "Classify Outliers"),
       
+      tags$hr(),
+       
+      h5(helpText("4: After completion of analysis, click 'Export Outliers' to export the classified outliers into a .csv file")),
+       
+      downloadButton("export", "Export Outliers")
       
     
     ),
@@ -53,8 +58,14 @@ ui <- fluidPage(
       uiOutput("rawData"),
     
       
-      h4("Maximum Number of Iterations Allowed"),
-      verbatimTextOutput("thresholdUI")
+      h4("Maximum Number of Iterations Allowed:"),
+      verbatimTextOutput("thresholdUI"),
+      
+      h4("Number of Iterations to Achieve Min Error:"),
+      verbatimTextOutput("testUI"),
+      
+      h4("Outlier Clasification"),
+      uiOutput("outlierInfo")
       
       
       

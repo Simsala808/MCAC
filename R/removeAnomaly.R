@@ -91,4 +91,17 @@ removeAnomaly <- function(chiSqrPlot, blocks, stateVector, outliers, error, time
   error <<- error
   timeData <<- timeData
   
+  
+  zout <- list()
+  
+  zout$chiSqrPlot <- chiSqrPlot
+  zout$blocks <- blocks
+  zout$stateVector <- stateVector
+  zout$outliers <- outliers
+  zout$error <- error
+  zout$timeData <- timeData
+  
+  return(zout)
+  
+  
 }
