@@ -48,7 +48,7 @@ ui <- fluidPage(
        
       h5(helpText("4: After completion of analysis, click 'Export Outliers' to export the classified outliers into a .csv file")),
        
-      downloadButton("export", "Export Outliers")
+      downloadButton("outliers.csv", "Export Outliers")
       
     
     ),

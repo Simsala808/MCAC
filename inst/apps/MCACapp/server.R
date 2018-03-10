@@ -200,7 +200,7 @@ shinyServer(function(input, output){
       tabsetPanel(tabPanel("Reduced Chi-Sqrare QQ Plot", plotOutput("reducedQQPlot")), tabPanel("Outliers", tableOutput("classifiedOutliers")) )
   })
   
-  output$export <- downloadHandler(
+  output$outliers.csv <- downloadHandler(
     filename = function() {
       paste(outliers, ".csv")
     },
