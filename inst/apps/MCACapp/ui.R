@@ -31,7 +31,7 @@ ui <- fluidPage(
       
       tags$hr(),
       
-      h5(helpText("2: Select a threshold for the percentage of data allowed to be classified as outliers at a maximum (default 3%)")),
+      h5(helpText("2: Select a threshold for the percentage of data allowed to be classified as outliers at a maximum (default is 6%)")),
       # horizontal line
       tags$hr(),
       
