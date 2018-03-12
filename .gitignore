@@ -6,12 +6,3 @@ hidden/
 src/*.dll
 src/*.o
 src/*.so
-src-x64/*.dll
-src-x64/*.o
-src-x64/*.so
-src-i386/*.dll
-src-i386/*.o
-src-i386/*.so
-*.so
-*.o
-*.dll
