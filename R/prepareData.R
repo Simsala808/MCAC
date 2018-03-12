@@ -42,7 +42,7 @@ reducedData <- rawData[, c(variables, times)] %>%
   .[order(.[, length(variables) +1 ]),]
 
 # generate state vector using anomalyDetection package
-stateVector <- tabulate_state_vector(reducedData, blocksize, level_limit = 50, level_keep = 10) %>% 
+stateVector <- tabulate_state_vector(reducedData[, variables], blocksize, level_limit = 50, level_keep = 10) %>% 
   mc_adjust(., min_var = 0.1, max_cor = 0.9, action = "exclude") 
 
 # Here we are creating time ranges corresponding to block sizes on the raw data time variable 
