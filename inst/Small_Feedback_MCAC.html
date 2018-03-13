@@ -130,12 +130,25 @@ $(document).ready(function () {
 </div>
 <div id="a-few-areas-of-concernsuggestions" class="section level2">
 <h2>A few areas of concern/suggestions</h2>
-<p>There were quite a few errors that I was getting such as, “You have removed the last 4 observations from the data set.” and “Some variables contain more than 50 levels. Only the 10 most popular levels of these variables will be tabulated.” and “cols( sourceAddress = col_character(), destinationAddress = col_character(), transportProtocol = col_character(), bytesIn = col_integer(), bytesOut = col_integer(), categoryOutcome = col_character(), ad.SCN = col_character(), IP_Pair = col_character(), Device_Name = col_character(), TIME_START = col_datetime(format =”“)”</p>
-<p>I believe that the rcpp_hello_world.cpp can be removed as it doesn’t appear to be utilized.</p>
+<p>There were quite a few errors/warning that I was getting such as, “You have removed the last 4 observations from the data set.” and “Some variables contain more than 50 levels. Only the 10 most popular levels of these variables will be tabulated.” and “cols( sourceAddress = col_character(), destinationAddress = col_character(), transportProtocol = col_character(), bytesIn = col_integer(), bytesOut = col_integer(), categoryOutcome = col_character(), ad.SCN = col_character(), IP_Pair = col_character(), Device_Name = col_character(), TIME_START = col_datetime(format =”“)” None of these errors seemed to impact my ability to work with the dataset/package.</p>
 <p>There is a data.R file which does not appear to be used. It seems like additional documentation which was added; however, you do have a similar file in the /man folder which provides similar information.</p>
-<p>(minor concern) I see that the runMCAC calls for the packages to be loaded; however, if I am going into the /inst/apps/MCACapp and select the server.R or ui.R and try to run the app that way, it doesn’t install/load the <code>readr</code> package.</p>
-<p>I believe some of the function arguments need additional documentation.</p>
-<p>Added three lines of code to the build ignore which should assist with the cross-platform functionality (these were recommended to me by Dr. Freels for my package).</p>
+<p>(minor concern) I see that the runMCAC calls for the packages to be loaded; however, if I am going into the /inst/apps/MCACapp and select the server.R or ui.R and try to run the app that way, it doesn’t install/load the <code>readr</code> package. There is a nice error that clued me in on it though.</p>
+<p>There is a sampleData.csv file and a sampleData.rda file. If the .rda file is selected for the shiny app, the shiny does not work. (If you read the directions on the shiny app, you would not make this mistake of course!) Unsure what the .rda file is used for if we’re just using the .csv file.</p>
+</div>
+<div id="evaluation-against-intended-targets" class="section level2">
+<h2>Evaluation against intended targets</h2>
+<p><em>Data Upload</em> Yes, this appears to have been accomplished. The Shiny app allowed for upload directly to the app.</p>
+<p><em>Automatic Data Cleaning</em> Yes, this appeared to work to clean the data using the prepareData and removeAnomaly functions</p>
+<p><em>Automatic Time Vector</em> Yes, it appears to be working. I think a little more description on this feature would be useful to allow for additional feedback.</p>
+<p><em>Classify Outliers</em> Yes, it appears that I was able to classify outliers using th RShiny App.</p>
+<p><em>Generate Plot</em> Yes, I was able to generate plots including the chi-square and Q-Q pltos within the Shiny App</p>
+<p><em>Export</em> Yes, this appeared to work; however, it does not seem that all the original attributes provided in the SampleData.csv file are provided ont he outliers.csv file.</p>
+<p><em>Manual threshold</em> I was able to move the slider and results seemed to change as the slider moved. It took a bit for it to recalculate.</p>
+<p>Overall, it is a nice package.</p>
+</div>
+<div id="overall-evaluation" class="section level2">
+<h2>Overall Evaluation</h2>
+<p>Score: 50/50.</p>
 </div>
 
 
