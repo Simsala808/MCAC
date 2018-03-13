@@ -1,0 +1,46 @@
+---
+title: "MCAC Feedback"
+author: "Matthew Small"
+date: "March 12, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Initial Take
+It took a little bit of work to understand what was going on with the package; however, there was sufficient documentation within the package to start working through the provided functionality.
+
+## A few areas of concern/suggestions
+There were quite a few errors that I was getting such as, "You have removed the last 4 observations from the data set." and "Some variables contain more than 50 levels. Only the 10 most popular levels of these variables will be tabulated." and "cols(
+  sourceAddress = col_character(),
+  destinationAddress = col_character(),
+  transportProtocol = col_character(),
+  bytesIn = col_integer(),
+  bytesOut = col_integer(),
+  categoryOutcome = col_character(),
+  ad.SCN = col_character(),
+  IP_Pair = col_character(),
+  Device_Name = col_character(),
+  TIME_START = col_datetime(format = "")"
+
+
+There is a data.R file which does not appear to be used.  It seems like additional documentation which was added; however, you do have a similar file in the /man folder which provides similar information.
+
+(minor concern) I see that the runMCAC calls for the packages to be loaded; however, if I am going into the /inst/apps/MCACapp and select the server.R or ui.R and try to run the app that way, it doesn't install/load the `readr` package.
+
+There is a sampleData.csv file and a sampleData.rda file.  If the .rda file is selected for the shiny app, it does not work. (If you read the directions on the shiny app, you would not make this mistake of course!)
+
+## Evaluation against intended targets
+*Data Upload* Yes, this appears to have been accomplished.  The Shiny app allowed for upload directly to the app.
+
+*Automatic Data Cleaning* Yes, this appeared to work to clean the data using the prepareData and removeAnomaly functions
+
+*Automatic Time Vector* Yes, it appears to be working.  I think a little more description on this feature would be useful to allow for additional feedback.
+
+*Classify Outliers* Yes, it appears that I was able to classify outliers using th RShiny App.
+
+*Generate Plot*  Yes, I was able to generate plots including the chi-square and Q-Q pltos within the Shiny App
+
+*Export* 
